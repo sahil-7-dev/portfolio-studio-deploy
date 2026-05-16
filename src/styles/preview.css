@@ -855,3 +855,13 @@
   border: 3px solid var(--pv-accent, #7c3aed);
   display: block;
 }
+
+/* Navbar avatar */
+.pv-nav-avatar {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 1.5px solid var(--pv-accent, #7c3aed);
+  flex-shrink: 0;
+}
