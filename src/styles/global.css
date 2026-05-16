@@ -954,6 +954,15 @@ body::before {
   scrollbar-color: rgba(255,255,255,0.18) transparent;
   max-width: 100%;
 }
+
+/* When scaling is active (mobile), stage switches to normal flow
+   so height can be driven by the scaled content div */
+.preview-stage.is-scaled {
+  position: relative;
+  width: 100%;
+  height: auto;
+  min-height: 100%;
+}
 .preview-stage::-webkit-scrollbar { width: 8px; }
 .preview-stage::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.18); }
 
