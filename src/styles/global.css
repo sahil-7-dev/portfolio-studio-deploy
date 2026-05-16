@@ -952,6 +952,7 @@ body::before {
   background: #000;
   scrollbar-width: thin;
   scrollbar-color: rgba(255,255,255,0.18) transparent;
+  max-width: 100%;
 }
 .preview-stage::-webkit-scrollbar { width: 8px; }
 .preview-stage::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.18); }
