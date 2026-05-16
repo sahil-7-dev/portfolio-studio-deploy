@@ -1030,7 +1030,7 @@ body::before {
     flex: 1;
     min-height: 0;
     position: relative;
-    overflow: hidden;
+    overflow: clip; /* clip instead of hidden — doesn't break sticky children */
   }
   .preview-pane.tab-active .preview-stage {
     position: absolute;
