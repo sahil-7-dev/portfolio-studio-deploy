@@ -10,17 +10,35 @@
 
 **A browser-based developer portfolio builder with live preview, five distinct themes, AI-assisted content, and zero-dependency HTML export. No signup. No watermark. Yours completely.**
 
-[Live](https://portfolio-studio-deploy.vercel.app) · [Report an Issue](https://github.com/sahil-7-dev/portfolio-studio-deploy/issues)
-
-> Feature-complete. Not under active development.
+[Live Demo](https://portfolio-studio-deploy.vercel.app) · [Report an Issue](https://github.com/sahil-7-dev/portfolio-studio-deploy/issues)
 
 </div>
 
 ---
 
-## Overview
+## Screenshots
 
-Most portfolio builders either lock your content behind a subscription, stamp their brand on your output, or require you to learn their proprietary CMS. Portfolio Studio does none of that. Fill in your details, watch the preview update live, pick a theme, and export a self-contained HTML file you can host anywhere — no account, no watermark, no strings.
+| Editor & Live Preview | Exported Output |
+|---|---|
+| ![Editor Preview](screenshots/portfolio-studio-editor-preview.png) | ![Exported Output](screenshots/portfolio-studio-exported-output.png) |
+
+---
+
+## Why I Built This
+
+Most portfolio builders have at least one of these problems:
+
+- Watermark your exported work unless you pay
+- Require a signup just to see a template
+- Lock clean themes behind a subscription
+- Cap how many times you can export or edit
+- Have bloated UIs that get in the way
+
+I wanted something that does none of that. Free. Clean UI. No signup. No watermark. No subscription. Unlimited exports. You fill in your details, pick a theme, and get a self-contained HTML file that you own completely — no strings attached.
+
+---
+
+## Overview
 
 The stack is intentionally lean: React + Vite on the frontend, a single Vercel serverless function proxying all AI calls, localStorage for persistence. No database, no auth, no managed backend.
 
@@ -36,7 +54,7 @@ The stack is intentionally lean: React + Vite on the frontend, a single Vercel s
 | **AI Bio Generator** | Generates a sharp 2–3 sentence professional bio from name, title, and skills via Gemini 2.0 Flash. |
 | **AI Description Enhancer** | Polishes rough project descriptions into recruiter-optimised copy. |
 | **AI Skills Suggester** | Suggests 5 complementary skills based on existing stack — rendered as one-click add chips. |
-| **Export HTML** | Produces a complete self-contained HTML file with all CSS inlined and fonts imported. Works offline. Zero external dependencies in the output. |
+| **Export HTML** | Produces a complete self-contained HTML file with all CSS inlined and fonts imported. Works offline. Zero external dependencies in the output. Unlimited exports. |
 | **Share Link** | Serialises the entire portfolio state to a compressed base64 URL param. No backend — all state lives in the URL. |
 | **Auto-save** | Debounced localStorage sync on every state change. Restores on reload. Base64 image data is excluded from storage to avoid mobile quota limits. |
 | **Accent Color System** | Pick any hex color — buttons, borders, chips, and hover states all derive from a single CSS variable. |
@@ -98,7 +116,7 @@ src/
 │   │   ├── PreviewPanel.jsx         — Lenis desktop only
 │   │   ├── PreviewWrapper.jsx       — theme class, CSS variable injection
 │   │   ├── HeroSection.jsx          — typewriter title, avatar
-│   │   ├── PreviewNav.jsx           — sticky nav, avatar in brand mark
+│   │   ├── PreviewNav.jsx           — sticky nav, hamburger on mobile
 │   │   ├── PreviewSkills.jsx        — IntersectionObserver entrance animation
 │   │   ├── ProjectsGrid.jsx         — featured card + regular grid
 │   │   └── ExperienceTimeline.jsx   — vertical timeline
@@ -141,8 +159,10 @@ UPSTASH_REDIS_REST_TOKEN    # Optional
 ## Known Behaviours
 
 - Uploaded photos (base64) are not persisted to localStorage — they reset on page reload. URL-based avatars persist normally. Intentional — prevents mobile storage quota exhaustion.
+- If no photo is uploaded or URL provided, the avatar falls back to initials derived from the name field.
 - Lenis is disabled on touch devices. Native momentum scroll is used instead to avoid GPU compositing issues on mobile.
 - Share links encode the full portfolio state in the URL. Large portfolios may produce long URLs.
+- Image uploads are validated client-side: JPG, PNG, WebP, GIF, AVIF, SVG only, 5MB max.
 
 ---
 
