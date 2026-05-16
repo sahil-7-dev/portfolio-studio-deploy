@@ -49,19 +49,14 @@ export default function HeroSection({ personal }) {
       <div className="pv-wrap">
         <div className="pv-hero-main">
           {personal.avatar && (
-            <motion.div
-              className="pv-avatar-wrap"
-              initial={{ opacity: 0, scale: 0.9 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 0.5, delay: 0.05 }}
-            >
+            <div className="pv-avatar-wrap">
               <img
                 className="pv-avatar"
                 src={personal.avatar}
                 alt={personal.name || 'Profile photo'}
                 onError={(e) => { e.currentTarget.style.display = 'none'; }}
               />
-            </motion.div>
+            </div>
           )}
           <motion.div
             className="pv-eyebrow"
