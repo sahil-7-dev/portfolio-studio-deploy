@@ -44,7 +44,16 @@ export default function App() {
       }
       const local = loadFromStorage();
       if (!cancelled && local) {
-        setPortfolioData((prev) => ({ ...prev, ...local }));
+        setPortfolioData((prev) => ({
+          ...prev,
+          ...local,
+          personal: {
+            ...prev.personal,
+            ...local.personal,
+            // If saved avatar is empty (stripped base64), keep the default
+            avatar: local.personal?.avatar || prev.personal.avatar
+          }
+        }));
       }
       setHydrated(true);
     })();
