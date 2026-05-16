@@ -131,7 +131,7 @@ body::before {
   display: grid;
   grid-template-columns: 40% 60%;
   height: calc(100vh - var(--topbar-h));
-  overflow: hidden;
+  overflow: clip;
   position: relative;
 }
 
@@ -148,7 +148,7 @@ body::before {
 .preview-pane {
   position: relative;
   background: var(--bg-canvas);
-  overflow: hidden;
+  overflow: clip;
   display: flex;
   flex-direction: column;
 }
@@ -1024,7 +1024,7 @@ body::before {
     inset: var(--topbar-h) 0 0 0;
     z-index: 30;
     height: calc(100vh - var(--topbar-h));
-    overflow: hidden;
+    overflow: clip;
   }
   .preview-pane.tab-active .preview-frame-shell {
     flex: 1;
