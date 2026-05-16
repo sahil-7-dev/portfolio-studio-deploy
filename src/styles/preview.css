@@ -841,3 +841,17 @@
   .preview-root .pv-nav-bar { overflow: hidden; }
   .preview-root .pv-nav-cta { display: none; }
 }
+
+/* ── Avatar in hero ─────────────────────────────────────────── */
+.pv-avatar-wrap {
+  margin-bottom: 24px;
+}
+
+.pv-avatar {
+  width: 88px;
+  height: 88px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 3px solid var(--pv-accent, #7c3aed);
+  display: block;
+}
