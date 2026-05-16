@@ -61,6 +61,23 @@ body {
 }
 a { color: inherit; text-decoration: none; }
 img { max-width: 100%; display: block; }
+.nav-avatar {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 1.5px solid var(--accent);
+  flex-shrink: 0;
+}
+.hero-avatar-wrap { margin-bottom: 24px; }
+.hero-avatar {
+  width: 88px;
+  height: 88px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 3px solid var(--accent);
+  display: block;
+}
 
 .wrap { max-width: 1280px; margin: 0 auto; padding: 0 64px; position: relative; }
 
@@ -596,7 +613,9 @@ ${buildParticlesMarkup(appearance.theme)}
 <nav class="nav-bar" aria-label="Site">
   <div class="wrap nav-inner">
     <a class="nav-brand" href="#top">
-      <span class="nav-mark" aria-hidden="true">${escapeHtml(initials)}</span>
+      ${personal.avatar
+        ? `<img class="nav-avatar" src="${escapeAttr(personal.avatar)}" alt="${escapeAttr(personal.name || '')}" />`
+        : `<span class="nav-mark" aria-hidden="true">${escapeHtml(initials)}</span>`}
       <span class="nav-name">${escapeHtml(firstName)}</span>
       <span class="nav-suffix" aria-hidden="true">/ portfolio</span>
     </a>
@@ -610,6 +629,7 @@ ${buildParticlesMarkup(appearance.theme)}
 <header class="hero" id="top">
   <div class="wrap">
     <div class="hero-main">
+      ${personal.avatar ? `<div class="hero-avatar-wrap"><img class="hero-avatar" src="${escapeAttr(personal.avatar)}" alt="${escapeAttr(personal.name || 'Profile photo')}" /></div>` : ''}
       <div class="hero-eyebrow">${personal.location ? escapeHtml(personal.location) : 'Portfolio'} / Available for work</div>
       <h1 class="hero-name">${escapeHtml(personal.name || 'Your Name')}</h1>
       <div class="hero-title" data-typewriter="${escapeAttr(personal.title || '')}"></div>
