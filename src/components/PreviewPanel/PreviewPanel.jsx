@@ -67,7 +67,7 @@ export default function PreviewPanel({ data, accentStyle, fontVars }) {
     data.appearance.theme === 'arctic' ? '#ffffff' :
     data.appearance.theme === 'terminal' ? '#0d1117' :
     data.appearance.theme === 'aurora' ? '#050818' :
-    data.appearance.theme === 'internsphere' ? '#111113' :
+    data.appearance.theme === 'internsphere' ? '#0f1013' :
     '#0a0a0a';
 
   return (
