@@ -1020,7 +1020,7 @@ body::before {
     position: fixed;
     inset: var(--topbar-h) 0 0 0;
     z-index: 30;
-    height: calc(100vh - var(--topbar-h));
+    height: calc(100dvh - var(--topbar-h));
     overflow: clip;
   }
   .preview-pane.tab-active .preview-frame-shell {
