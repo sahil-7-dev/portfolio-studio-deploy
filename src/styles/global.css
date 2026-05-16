@@ -941,15 +941,17 @@ body::before {
 
 .preview-frame-shell {
   flex: 1;
-  min-height: 0;
-  overflow-y: auto;
-  overflow-x: hidden;
-  scrollbar-width: thin;
-  scrollbar-color: rgba(255,255,255,0.18) transparent;
+  position: relative;
+  overflow: clip;
 }
 .preview-stage {
-  min-height: 100%;
+  position: absolute;
+  inset: 0;
+  overflow-y: auto;
+  overflow-x: hidden;
   background: #000;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(255,255,255,0.18) transparent;
 }
 .preview-stage::-webkit-scrollbar { width: 8px; }
 .preview-stage::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.18); }
