@@ -146,7 +146,10 @@ export default function PersonalSection({ data, onChange }) {
               <img
                 src={previewSrc}
                 alt="Avatar preview"
-                onError={() => setPreviewSrc('')}
+                onError={() => {
+                  setUploadErr('URL did not load. Use a direct image link ending in .jpg, .png, or .webp');
+                  setPreviewSrc('');
+                }}
               />
             ) : (
               <span className="avatar-placeholder">
@@ -179,7 +182,7 @@ export default function PersonalSection({ data, onChange }) {
                 className="input"
                 value={urlInput}
                 onChange={handleUrlChange}
-                placeholder="https://example.com/photo.jpg — any format"
+                placeholder="Direct image URL ending in .jpg .png .webp etc."
               />
             )}
 
