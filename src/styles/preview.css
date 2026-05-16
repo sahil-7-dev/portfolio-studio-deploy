@@ -716,13 +716,13 @@
 /* Zinc-dark surfaces, tri-color brand gradient, softly rounded cards.
    Palette extracted from internsphere-pi.vercel.app dark theme. */
 .preview-root.theme-internsphere {
-  --pv-bg: #111113;
+  --pv-bg: #0f1013;
   --pv-ink: rgba(255, 255, 255, 0.95);
   --pv-soft: rgba(255, 255, 255, 0.78);
   --pv-muted: rgba(255, 255, 255, 0.62);
   --pv-line: rgba(255, 255, 255, 0.08);
-  --pv-card-bg: #1c1c1f;
-  --pv-chip-bg: #26262a;
+  --pv-card-bg: #18191d;
+  --pv-chip-bg: #1f2127;
   --pv-font-display: 'Inter', sans-serif;
   --pv-font-body: 'Inter', sans-serif;
   --pv-font-mono: 'JetBrains Mono', monospace;
