@@ -942,7 +942,7 @@ body::before {
 .preview-frame-shell {
   flex: 1;
   position: relative;
-  overflow: hidden;
+  overflow: clip; /* clip not hidden — hidden breaks position:sticky inside preview-stage */
 }
 .preview-stage {
   position: absolute;
@@ -1030,7 +1030,6 @@ body::before {
     flex: 1;
     min-height: 0;
     position: relative;
-    overflow: clip; /* clip instead of hidden — doesn't break sticky children */
   }
   .preview-pane.tab-active .preview-stage {
     position: absolute;
