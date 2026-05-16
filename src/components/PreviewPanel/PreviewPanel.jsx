@@ -1,8 +1,21 @@
 import React, { useEffect, useRef } from 'react';
 import PreviewWrapper from './PreviewWrapper.jsx';
 
+// Only initialise Lenis on non-touch devices.
+// On mobile, native momentum scrolling is better and Lenis transforms
+// cause compositing issues that make images flicker or vanish.
+function isTouchDevice() {
+  return (
+    typeof window !== 'undefined' &&
+    ('ontouchstart' in window || navigator.maxTouchPoints > 0)
+  );
+}
+
 function useLenisOn(ref) {
   useEffect(() => {
+    // Skip Lenis on touch/mobile — use native scroll instead
+    if (isTouchDevice()) return;
+
     let cancelled = false;
     let lenis = null;
     let rafId = null;
@@ -67,7 +80,7 @@ export default function PreviewPanel({ data, accentStyle, fontVars }) {
           {data.personal.name
             ? `${data.personal.name.toLowerCase().replace(/\s+/g, '')}.dev`
             : 'portfolio.dev'}
-          <span style={{ marginLeft: 6, opacity: 0.5 }}>· live preview · {data.appearance.theme} · lenis on</span>
+          <span style={{ marginLeft: 6, opacity: 0.5 }}>· live preview · {data.appearance.theme}</span>
         </div>
         <span>{data.skills.length} sk · {data.projects.length} pj · {data.experience.length} xp</span>
       </div>
