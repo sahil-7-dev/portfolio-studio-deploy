@@ -12,23 +12,41 @@ function useScaleToFit(scrollerRef, contentRef) {
     const apply = () => {
       const w = scroller.offsetWidth;
       if (!w) return;
+
       if (w >= DESIGN_WIDTH) {
         content.style.transform = '';
         content.style.width = '';
+        content.style.marginBottom = '';
         return;
       }
+
       const scale = w / DESIGN_WIDTH;
+
+      // Reset first so offsetHeight reads natural height
+      content.style.transform = '';
+      content.style.marginBottom = '';
       content.style.width = `${DESIGN_WIDTH}px`;
+
+      // Read natural height BEFORE applying scale
+      const naturalHeight = content.offsetHeight;
+      const scaledHeight = naturalHeight * scale;
+      const excess = naturalHeight - scaledHeight;
+
+      // Now apply scale and pull up the excess space
       content.style.transformOrigin = 'top left';
       content.style.transform = `scale(${scale})`;
-      // shrink the wrapper so it doesn't reserve unscaled height
-      content.style.marginBottom = `${-(content.offsetHeight * (1 - scale))}px`;
+      content.style.marginBottom = `-${excess}px`;
     };
 
     const ro = new ResizeObserver(apply);
     ro.observe(scroller);
+
+    // Also re-run when content changes (data updates)
+    const mo = new MutationObserver(apply);
+    mo.observe(content, { childList: true, subtree: true });
+
     apply();
-    return () => ro.disconnect();
+    return () => { ro.disconnect(); mo.disconnect(); };
   }, [scrollerRef, contentRef]);
 }
 
@@ -71,17 +89,17 @@ function useLenisOn(ref) {
 }
 
 export default function PreviewPanel({ data, accentStyle, fontVars }) {
-  const scrollerRef = useRef(null); // the element that scrolls
-  const contentRef  = useRef(null); // the element that gets scaled
+  const scrollerRef = useRef(null);
+  const contentRef  = useRef(null);
 
   useLenisOn(scrollerRef);
   useScaleToFit(scrollerRef, contentRef);
 
   const themeBg =
-    data.appearance.theme === 'arctic'      ? '#ffffff' :
-    data.appearance.theme === 'terminal'    ? '#0d1117' :
-    data.appearance.theme === 'aurora'      ? '#050818' :
-    data.appearance.theme === 'internsphere'? '#111113' :
+    data.appearance.theme === 'arctic'       ? '#ffffff' :
+    data.appearance.theme === 'terminal'     ? '#0d1117' :
+    data.appearance.theme === 'aurora'       ? '#050818' :
+    data.appearance.theme === 'internsphere' ? '#111113' :
     '#0a0a0a';
 
   return (
