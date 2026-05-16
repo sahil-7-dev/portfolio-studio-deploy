@@ -1017,29 +1017,19 @@ body::before {
   .preview-pane { display: none; }
   .editor-pane.tab-active { display: block; }
   .preview-pane.tab-active {
-    display: flex;
-    flex-direction: column;
+    display: block;
     position: fixed;
     inset: var(--topbar-h) 0 0 0;
     z-index: 30;
-    height: calc(100dvh - var(--topbar-h));
     overflow: clip;
   }
   .preview-pane.tab-active .preview-frame-shell {
-    flex: 1;
-    min-height: 0;
-    display: flex;
-    flex-direction: column;
-    overflow: clip;
-    position: relative;
-    -webkit-overflow-scrolling: touch;
+    position: fixed;
+    inset: calc(var(--topbar-h) + 36px) 0 0 0;
   }
   .preview-pane.tab-active .preview-stage {
-    position: relative;
-    inset: auto;
-    flex: 1;
-    min-height: 0;
-    height: 100%;
+    position: absolute;
+    inset: 0;
     overflow-y: auto;
     overflow-x: hidden;
     -webkit-overflow-scrolling: touch;
