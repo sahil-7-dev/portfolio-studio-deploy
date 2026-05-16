@@ -1,6 +1,19 @@
 // Debounced localStorage save + load.
+// Base64 image data is excluded from storage to avoid QuotaExceededError on mobile.
 
 const STORAGE_KEY = 'portfolio-studio:v1';
+
+function stripBase64(data) {
+  if (!data) return data;
+  const avatar = data?.personal?.avatar || '';
+  if (avatar.startsWith('data:')) {
+    return {
+      ...data,
+      personal: { ...data.personal, avatar: '' }
+    };
+  }
+  return data;
+}
 
 export function loadFromStorage() {
   try {
@@ -20,7 +33,7 @@ export function makeDebouncedSaver(delay = 500) {
     if (timer) clearTimeout(timer);
     timer = setTimeout(() => {
       try {
-        localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(stripBase64(data)));
         if (onSavedCallback) onSavedCallback();
       } catch {
         // quota or serialization issue — silent fail, app still works
