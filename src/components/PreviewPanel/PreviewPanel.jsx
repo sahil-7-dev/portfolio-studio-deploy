@@ -1,8 +1,49 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useCallback } from 'react';
 import PreviewWrapper from './PreviewWrapper.jsx';
 
-// Attach Lenis (loaded via CDN in index.html) to the preview's scroll
-// container. Lenis takes over wheel/touch and animates the scroll smoothly.
+// Desktop width the preview is designed for
+const DESIGN_WIDTH = 1280;
+
+// Scale the preview content to always fit the container width
+function useScaleToFit(stageRef, contentRef) {
+  const applyScale = useCallback(() => {
+    const stage = stageRef.current;
+    const content = contentRef.current;
+    if (!stage || !content) return;
+
+    const containerWidth = stage.offsetWidth;
+    if (containerWidth >= DESIGN_WIDTH) {
+      // Enough room — no scaling needed
+      content.style.transform = '';
+      content.style.transformOrigin = '';
+      content.style.width = '';
+      content.style.height = '';
+      stage.style.height = '';
+      return;
+    }
+
+    const scale = containerWidth / DESIGN_WIDTH;
+    content.style.transformOrigin = 'top left';
+    content.style.transform = `scale(${scale})`;
+    content.style.width = `${DESIGN_WIDTH}px`;
+    // Make stage scrollable by setting its height to the scaled content height
+    const scaledHeight = content.scrollHeight * scale;
+    stage.style.height = `${scaledHeight}px`;
+  }, [stageRef, contentRef]);
+
+  useEffect(() => {
+    applyScale();
+    const ro = new ResizeObserver(applyScale);
+    if (stageRef.current) ro.observe(stageRef.current);
+    window.addEventListener('resize', applyScale);
+    return () => {
+      ro.disconnect();
+      window.removeEventListener('resize', applyScale);
+    };
+  }, [applyScale]);
+}
+
+// Attach Lenis (loaded via CDN in index.html) to the preview's scroll container.
 function useLenisOn(ref) {
   useEffect(() => {
     let cancelled = false;
@@ -50,7 +91,10 @@ function useLenisOn(ref) {
 
 export default function PreviewPanel({ data, accentStyle, fontVars }) {
   const stageRef = useRef(null);
+  const contentRef = useRef(null);
+
   useLenisOn(stageRef);
+  useScaleToFit(stageRef, contentRef);
 
   const themeBg =
     data.appearance.theme === 'arctic' ? '#ffffff' :
@@ -75,8 +119,10 @@ export default function PreviewPanel({ data, accentStyle, fontVars }) {
       </div>
 
       <div className="preview-frame-shell">
-        <div ref={stageRef} className="preview-stage" style={{ background: themeBg }}>
-          <PreviewWrapper data={data} accentStyle={accentStyle} fontVars={fontVars} />
+        <div ref={stageRef} className="preview-stage" style={{ background: themeBg, overflowX: 'hidden' }}>
+          <div ref={contentRef}>
+            <PreviewWrapper data={data} accentStyle={accentStyle} fontVars={fontVars} />
+          </div>
         </div>
       </div>
     </>
