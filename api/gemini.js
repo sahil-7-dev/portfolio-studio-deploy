@@ -113,7 +113,7 @@ export default async function handler(req, res) {
         const status = errData?.error?.status;
 
         if (status === 'RESOURCE_EXHAUSTED' || response.status === 429) {
-          friendlyError = "AI feature is unavailable right now. Please try again later.";
+          friendlyError = "Daily AI limit reached. Come back tomorrow.";
         }
       } catch {
         // errText wasn't JSON — use the default friendly message
