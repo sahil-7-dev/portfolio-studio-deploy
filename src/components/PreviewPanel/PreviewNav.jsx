@@ -60,7 +60,16 @@ export default function PreviewNav({ personal, hasSkills, hasProjects, hasExperi
     <nav ref={navRef} className={`pv-nav-bar ${scrolled ? 'is-scrolled' : ''} ${menuOpen ? 'menu-open' : ''}`} aria-label="Site">
       <div className="pv-wrap pv-nav-inner">
         <a className="pv-nav-brand" href="#top" onClick={(e) => onAnchor(e, '#top')}>
-          <span className="pv-nav-mark" aria-hidden="true">{initials}</span>
+          {personal.avatar ? (
+            <img
+              className="pv-nav-avatar"
+              src={personal.avatar}
+              alt={personal.name || 'Avatar'}
+              onError={(e) => { e.currentTarget.style.display = 'none'; }}
+            />
+          ) : (
+            <span className="pv-nav-mark" aria-hidden="true">{initials}</span>
+          )}
           <span className="pv-nav-name">{firstName}</span>
           <span className="pv-nav-suffix" aria-hidden="true">/ portfolio</span>
         </a>
