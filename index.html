@@ -11,9 +11,19 @@
       href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Geist:wght@300;400;500;600;700&family=JetBrains+Mono:wght@300;400;500;600&family=Inter:wght@300;400;500;600;700;800;900&family=DM+Sans:wght@300;400;500;700;900&display=swap"
       rel="stylesheet"
     />
-    <!-- Lenis smooth scroll (CDN) — attached to the preview pane in PreviewPanel.jsx -->
+    <!-- Lenis smooth scroll (CDN) — desktop only, disabled on touch devices -->
     <link rel="stylesheet" href="https://unpkg.com/lenis@1.1.20/dist/lenis.css" />
     <script src="https://unpkg.com/lenis@1.1.20/dist/lenis.min.js"></script>
+    <style>
+      /* Counteract Lenis CSS on mobile — it sets html/body height:auto
+         which breaks fixed positioning and causes layout issues */
+      @media (pointer: coarse) {
+        html, html.lenis, html.lenis body {
+          height: 100% !important;
+          overflow: hidden !important;
+        }
+      }
+    </style>
   </head>
   <body>
     <div id="root"></div>
