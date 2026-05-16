@@ -782,3 +782,17 @@
   .preview-root .pv-project { padding: 28px; }
   .preview-root section.pv-section { padding: 72px 0; }
 }
+@media (max-width: 480px) {
+  .preview-root {
+    --t-hero:    calc(var(--pv-scale) * clamp(36px, 10vw, 56px));
+    --t-display: calc(var(--pv-scale) * clamp(28px, 7vw, 40px));
+    overflow-x: hidden;
+  }
+  .preview-root .pv-wrap { padding: 0 20px; }
+  .preview-root section.pv-section { padding: 56px 0; }
+  .preview-root .pv-hero { min-height: calc(100svh - 64px); padding: 48px 0 72px; }
+  .preview-root .pv-project.featured { padding: 24px; }
+  .preview-root .pv-project { padding: 20px; }
+  .preview-root .pv-nav-bar { overflow: hidden; }
+  .preview-root .pv-nav-cta { display: none; }
+}
