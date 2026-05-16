@@ -184,6 +184,9 @@
 @media (max-width: 720px) {
   .preview-root .pv-nav-suffix { display: none; }
   .preview-root .pv-nav-links { display: none; }
+  .preview-root .pv-nav-cta { display: none; }
+  .preview-root .pv-nav-inner { gap: 12px; }
+  .preview-root .pv-wrap { overflow: hidden; }
 }
 
 /* ========== HERO ========== */
