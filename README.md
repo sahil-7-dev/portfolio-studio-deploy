@@ -44,6 +44,16 @@ The stack is intentionally lean: React + Vite on the frontend, a single Vercel s
 
 ---
 
+## Stack
+
+- **React + Vite** — frontend SPA
+- **Vercel Functions** — serverless AI proxy, key never in client bundle
+- **Gemini 2.0 Flash** — AI bio, descriptions, and skills generation
+- **Upstash Redis** — IP-based rate limiting (optional)
+- **localStorage** — persistence, zero backend required
+
+---
+
 ## Features
 
 | | |
@@ -54,7 +64,7 @@ The stack is intentionally lean: React + Vite on the frontend, a single Vercel s
 | **AI Bio Generator** | Generates a sharp 2–3 sentence professional bio from name, title, and skills via Gemini 2.0 Flash. |
 | **AI Description Enhancer** | Polishes rough project descriptions into recruiter-optimised copy. |
 | **AI Skills Suggester** | Suggests 5 complementary skills based on existing stack — rendered as one-click add chips. |
-| **Export HTML** | Produces a complete self-contained HTML file with all CSS inlined and fonts imported. Works offline. Zero external dependencies in the output. Unlimited exports. |
+| **Export HTML** | Produces a fully self-contained HTML file — CSS inlined, fonts imported, zero external dependencies. Host it anywhere. Works offline. Unlimited exports. You own the output completely. |
 | **Share Link** | Serialises the entire portfolio state to a compressed base64 URL param. No backend — all state lives in the URL. |
 | **Auto-save** | Debounced localStorage sync on every state change. Restores on reload. Base64 image data is excluded from storage to avoid mobile quota limits. |
 | **Accent Color System** | Pick any hex color — buttons, borders, chips, and hover states all derive from a single CSS variable. |
@@ -143,6 +153,12 @@ npm install
 cp .env.local.example .env.local
 # Add your GEMINI_API_KEY to .env.local
 npm run dev
+```
+
+**Deploy to Vercel:**
+
+```bash
+vercel deploy
 ```
 
 **Vercel environment variables:**
