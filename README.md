@@ -8,7 +8,7 @@
 
 # Portfolio Studio
 
-**A browser-based developer portfolio builder with live preview, four distinct themes, AI-assisted content, and zero-dependency HTML export. No signup. No watermark. Yours completely.**
+**A browser-based developer portfolio builder with live preview, five distinct themes, AI-assisted content, and zero-dependency HTML export. No signup. No watermark. Yours completely.**
 
 [Live](https://portfolio-studio-deploy.vercel.app) · [Report an Issue](https://github.com/sahil-7-dev/portfolio-studio-deploy/issues)
 
@@ -31,7 +31,7 @@ The stack is intentionally lean: React + Vite on the frontend, a single Vercel s
 | | |
 |---|---|
 | **Live Preview** | Split-screen editor and preview update in real time on every keystroke. No save button. |
-| **Four Themes** | Obsidian (dark minimal), Arctic (light clean), Terminal (neon green monospace), Aurora (glassmorphism + particles). Each is a complete CSS variable swap — no page reload. |
+| **Five Themes** | Obsidian (dark minimal), Arctic (light clean), Terminal (neon green monospace), Aurora (glassmorphism + particles), InternSphere (dark pill-shaped UI, purple gradient). Each is a complete CSS variable swap — no page reload. |
 | **Profile Photo** | Upload from device (JPG, PNG, WebP, GIF, AVIF, SVG · max 5MB) or paste any direct image URL. Shows in both the hero section and navbar. |
 | **AI Bio Generator** | Generates a sharp 2–3 sentence professional bio from name, title, and skills via Gemini 2.0 Flash. |
 | **AI Description Enhancer** | Polishes rough project descriptions into recruiter-optimised copy. |
@@ -69,6 +69,7 @@ All AI requests pass through `/api/gemini`. The Gemini API key is a Vercel envir
 | `arctic` | `#ffffff` | DM Sans | Clean geometric cards |
 | `terminal` | `#0d1117` | JetBrains Mono | Scanline overlay, blinking cursor |
 | `aurora` | `#050818` | Inter | Glassmorphism cards, floating particles |
+| `internsphere` | `#0f1013` | Inter | Pill-shaped UI, purple → violet → pink brand gradient |
 
 ---
 
