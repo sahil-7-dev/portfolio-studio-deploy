@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState } from 'react';
 
 export default function PreviewNav({ personal, hasSkills, hasProjects, hasExperience }) {
   const [scrolled, setScrolled] = useState(false);
+  const [menuOpen, setMenuOpen] = useState(false);
   const navRef = useRef(null);
 
   // Watch the scroll container (.preview-stage) for "scrolled" state styling.
@@ -13,6 +14,16 @@ export default function PreviewNav({ personal, hasSkills, hasProjects, hasExperi
     stage.addEventListener('scroll', onScroll, { passive: true });
     return () => stage.removeEventListener('scroll', onScroll);
   }, []);
+
+  // Close menu on scroll
+  useEffect(() => {
+    if (!menuOpen) return;
+    const stage = navRef.current?.closest('.preview-stage');
+    if (!stage) return;
+    const close = () => setMenuOpen(false);
+    stage.addEventListener('scroll', close, { passive: true });
+    return () => stage.removeEventListener('scroll', close);
+  }, [menuOpen]);
 
   const links = [];
   if (hasSkills)     links.push({ label: 'Skills',     href: '#skills' });
@@ -27,6 +38,7 @@ export default function PreviewNav({ personal, hasSkills, hasProjects, hasExperi
   // Use Lenis for smooth scroll to anchor; fall back to native scrollIntoView.
   const onAnchor = (e, href) => {
     e.preventDefault();
+    setMenuOpen(false);
     const target = document.querySelector(href);
     if (!target) return;
     const navH = navRef.current?.offsetHeight || 64;
@@ -45,7 +57,7 @@ export default function PreviewNav({ personal, hasSkills, hasProjects, hasExperi
   };
 
   return (
-    <nav ref={navRef} className={`pv-nav-bar ${scrolled ? 'is-scrolled' : ''}`} aria-label="Site">
+    <nav ref={navRef} className={`pv-nav-bar ${scrolled ? 'is-scrolled' : ''} ${menuOpen ? 'menu-open' : ''}`} aria-label="Site">
       <div className="pv-wrap pv-nav-inner">
         <a className="pv-nav-brand" href="#top" onClick={(e) => onAnchor(e, '#top')}>
           <span className="pv-nav-mark" aria-hidden="true">{initials}</span>
@@ -53,6 +65,7 @@ export default function PreviewNav({ personal, hasSkills, hasProjects, hasExperi
           <span className="pv-nav-suffix" aria-hidden="true">/ portfolio</span>
         </a>
 
+        {/* Desktop links */}
         {links.length > 0 && (
           <ul className="pv-nav-links">
             {links.map((l) => (
@@ -61,6 +74,17 @@ export default function PreviewNav({ personal, hasSkills, hasProjects, hasExperi
               </li>
             ))}
           </ul>
+        )}
+
+        {/* Mobile hamburger */}
+        {links.length > 0 && (
+          <button
+            className="pv-nav-hamburger"
+            aria-label={menuOpen ? 'Close menu' : 'Open menu'}
+            onClick={() => setMenuOpen((o) => !o)}
+          >
+            <span /><span /><span />
+          </button>
         )}
 
         {personal.email ? (
@@ -72,6 +96,22 @@ export default function PreviewNav({ personal, hasSkills, hasProjects, hasExperi
           </a>
         ) : <span className="pv-nav-cta-spacer" aria-hidden="true" />}
       </div>
+
+      {/* Mobile dropdown */}
+      {menuOpen && links.length > 0 && (
+        <div className="pv-nav-mobile-menu">
+          {links.map((l) => (
+            <a key={l.href} href={l.href} onClick={(e) => onAnchor(e, l.href)}>
+              {l.label}
+            </a>
+          ))}
+          {personal.email && (
+            <a href={`mailto:${personal.email}`} onClick={() => setMenuOpen(false)}>
+              Get in touch
+            </a>
+          )}
+        </div>
+      )}
     </nav>
   );
 }
