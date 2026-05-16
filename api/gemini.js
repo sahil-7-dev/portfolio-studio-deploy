@@ -105,8 +105,21 @@ export default async function handler(req, res) {
     });
 
     if (!response.ok) {
-      const err = await response.text().catch(() => '');
-      return res.status(response.status).json({ error: `Gemini error: ${err}` });
+      const errText = await response.text().catch(() => '');
+      let friendlyError = 'Something went wrong with the AI. Please try again.';
+
+      try {
+        const errData = JSON.parse(errText);
+        const status = errData?.error?.status;
+
+        if (status === 'RESOURCE_EXHAUSTED' || response.status === 429) {
+          friendlyError = "AI feature is unavailable right now. Please try again later.";
+        }
+      } catch {
+        // errText wasn't JSON — use the default friendly message
+      }
+
+      return res.status(response.status).json({ error: friendlyError });
     }
 
     const data = await response.json();
