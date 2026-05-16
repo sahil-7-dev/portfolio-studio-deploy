@@ -235,7 +235,7 @@
 /* ========== HERO ========== */
 
 .preview-root .pv-hero {
-  min-height: calc(100vh - 64px);
+  min-height: calc(100dvh - 64px);
   display: flex;
   align-items: center;
   padding: 64px 0 96px;
@@ -836,7 +836,7 @@
   }
   .preview-root .pv-wrap { padding: 0 20px; }
   .preview-root section.pv-section { padding: 56px 0; }
-  .preview-root .pv-hero { min-height: calc(100svh - 64px); padding: 48px 0 72px; }
+  .preview-root .pv-hero { min-height: unset; padding: 48px 0 72px; }
   .preview-root .pv-project.featured { padding: 24px; }
   .preview-root .pv-project { padding: 20px; }
   .preview-root .pv-nav-bar { overflow: hidden; }
