@@ -2,6 +2,7 @@ import React, { useEffect, useRef } from 'react';
 import PreviewWrapper from './PreviewWrapper.jsx';
 
 const DESIGN_WIDTH = 1280;
+const isTouchDevice = () => window.matchMedia('(hover: none) and (pointer: coarse)').matches;
 
 function useScaleToFit(scrollerRef, contentRef) {
   useEffect(() => {
@@ -14,44 +15,44 @@ function useScaleToFit(scrollerRef, contentRef) {
       if (!w) return;
 
       if (w >= DESIGN_WIDTH) {
-        content.style.transform = '';
-        content.style.width = '';
-        content.style.marginBottom = '';
+        content.style.cssText = '';
         return;
       }
 
       const scale = w / DESIGN_WIDTH;
 
-      // Reset first so offsetHeight reads natural height
-      content.style.transform = '';
-      content.style.marginBottom = '';
+      // Reset, force reflow, then measure natural height
+      content.style.transform = 'none';
+      content.style.marginBottom = '0px';
       content.style.width = `${DESIGN_WIDTH}px`;
-
-      // Read natural height BEFORE applying scale
-      const naturalHeight = content.offsetHeight;
-      const scaledHeight = naturalHeight * scale;
-      const excess = naturalHeight - scaledHeight;
-
-      // Now apply scale and pull up the excess space
       content.style.transformOrigin = 'top left';
+
+      void content.offsetHeight; // force reflow
+
+      const naturalHeight = content.scrollHeight;
+      const visualHeight = naturalHeight * scale;
+      const excess = naturalHeight - visualHeight;
+
       content.style.transform = `scale(${scale})`;
       content.style.marginBottom = `-${excess}px`;
     };
 
     const ro = new ResizeObserver(apply);
     ro.observe(scroller);
-
-    // Also re-run when content changes (data updates)
     const mo = new MutationObserver(apply);
     mo.observe(content, { childList: true, subtree: true });
-
     apply();
+
     return () => { ro.disconnect(); mo.disconnect(); };
   }, [scrollerRef, contentRef]);
 }
 
+// Only use Lenis on non-touch devices — on real phones native scroll
+// handles dynamic viewport changes (toolbar show/hide) correctly
 function useLenisOn(ref) {
   useEffect(() => {
+    if (isTouchDevice()) return; // native scroll on mobile
+
     let cancelled = false;
     let lenis = null;
     let rafId = null;
