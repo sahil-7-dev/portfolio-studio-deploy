@@ -11,7 +11,7 @@ export const DEFAULT_PORTFOLIO = {
     email: 'hi@mira.dev',
     github: 'https://github.com/mcastellanos',
     linkedin: 'https://linkedin.com/in/mcastellanos',
-    avatar: ''
+    avatar: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?q=80&w=1200&auto=format&fit=crop',
   },
   skills: [
     { id: uid(), label: 'TypeScript' },
