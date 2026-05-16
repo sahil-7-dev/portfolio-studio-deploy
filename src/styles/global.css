@@ -1028,7 +1028,17 @@ body::before {
   .preview-pane.tab-active .preview-frame-shell {
     flex: 1;
     min-height: 0;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
     -webkit-overflow-scrolling: touch;
+  }
+  .preview-pane.tab-active .preview-stage {
+    flex: 1;
+    min-height: 0;
+    height: 100%;
+    overflow-y: auto;
+    overflow-x: hidden;
   }
   .tab-toggle { display: inline-flex; }
 }
