@@ -1016,7 +1016,28 @@ body::before {
   .editor-pane { display: none; border-right: 0; }
   .preview-pane { display: none; }
   .editor-pane.tab-active { display: block; }
-  .preview-pane.tab-active { display: flex; }
+  .preview-pane.tab-active {
+    display: flex;
+    flex-direction: column;
+    position: fixed;
+    inset: var(--topbar-h) 0 0 0;
+    z-index: 30;
+    height: calc(100vh - var(--topbar-h));
+    overflow: hidden;
+  }
+  .preview-pane.tab-active .preview-frame-shell {
+    flex: 1;
+    min-height: 0;
+    position: relative;
+    overflow: hidden;
+  }
+  .preview-pane.tab-active .preview-stage {
+    position: absolute;
+    inset: 0;
+    overflow-y: auto;
+    overflow-x: hidden;
+    -webkit-overflow-scrolling: touch;
+  }
   .tab-toggle { display: inline-flex; }
 }
 
@@ -1030,6 +1051,12 @@ body::before {
     z-index: 30;
     background: var(--bg-canvas);
   }
+  .preview-toolbar {
+    padding: 8px var(--s-4);
+    flex-shrink: 0;
+  }
+  .preview-toolbar .dots { display: none; }
+  .preview-toolbar span:last-child { display: none; }
 }
 
 /* Toast */
